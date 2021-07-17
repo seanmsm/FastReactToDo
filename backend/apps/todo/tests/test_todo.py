@@ -1,4 +1,5 @@
 import pytest
+from fastapi import HTTPException
 
 import backend.apps.todo.todo_router as todo_router
 from backend.apps.todo.models.task_model import TaskModel, TaskDataModel
@@ -22,10 +23,20 @@ async def test_get_todos():
 
 
 @pytest.mark.asyncio
-async def test_get_todo():
-    expected = TaskModel(id=1, desc='task 1', tags=['tag1', 'tag2'], completed=False)
-    result = await todo_router.get_todo(1)
-    assert expected == result
+@pytest.mark.parametrize('task_id', [1, 2])
+async def test_get_todo(task_id):
+    result = await todo_router.get_todo(task_id)
+    assert task_id == result.id
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize('task_id', [3, 4, 5])
+async def test_get_todo_404(task_id):
+    try:
+        await todo_router.get_todo(task_id)
+    except HTTPException:
+        return True
+    return False
 
 
 @pytest.mark.asyncio
