@@ -7,6 +7,10 @@ tags_metadata = [
     {
         "name": "root",
         "description": "TODO",
+    },
+    {
+        "name": "tasks",
+        "description": "TODO",
     }
 ]
 
