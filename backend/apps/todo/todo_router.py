@@ -44,3 +44,12 @@ async def update_task(task_id: int, task_data: TaskDataModel) -> TaskModel:
     todos[task_id].tags = task_data.tags
     todos[task_id].completed = task_data.completed
     return todos[task_id]
+
+
+@todo_router.delete("/{id}", response_description="Delete a task", status_code=204)
+async def remove_task(task_id: int) -> None:
+    task = todos.get(task_id, None)
+    if task is None:
+        raise HTTPException(status_code=404, detail=f"Task {task_id} not found")
+
+    todos.pop(task_id)
