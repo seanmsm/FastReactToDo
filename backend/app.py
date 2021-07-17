@@ -1,9 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
-# TODO: meaningful tag descriptions
 from backend.apps.todo.todo_router import todo_router
 
+# TODO: meaningful tag descriptions
 tags_metadata = [
     {
         "name": "root",
